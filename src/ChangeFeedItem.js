@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import './ChangeFeedItem.css';
 
-const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, status, onToggleEdit, onPublishChange: onPublishChangeProp }) => {
+const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, status, onToggleEdit, onPublishChange: onPublishChangeProp, onSave: onSaveProp  }) => {
   const [data, setData] = useState(initialData);
   const [isEditable, setIsEditable] = useState(isEditableProp || false);
 
@@ -15,11 +15,17 @@ const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, status, onTog
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
-
   const handleSave = () => {
+    // Check if any field is empty
+    if (!data.date.trim() || !data.title.trim() || !data.content.trim()) {
+      alert('Please fill in all fields before saving.');
+      return;
+    }
+
     setIsEditable(false);
-    onToggleEdit({ id: data.id, isEditable: false, publishStatus: 'draft' }); // Call the onToggleEdit from props
+    onSaveProp(data); // Pass the updated data back to the parent component for saving
   };
+
 
   const handleEdit = () => {
     setIsEditable(true);
@@ -68,9 +74,15 @@ const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, status, onTog
           )}
         </div>
         <div className="col text-end">
-            <button onClick={() => onToggleEdit(data.id)} className={`btn ${isEditable ? 'btn-success me-2' : 'btn-primary me-2'}`}>
-            {isEditable ? 'Save' : 'Edit'}
-            </button>
+            {isEditable ? (
+                <button onClick={handleSave} className="btn btn-success me-2">
+                    Save
+                </button>
+                ) : (
+                <button onClick={handleEdit} className="btn btn-primary me-2">
+                Edit
+                </button>
+            )}
             {!isEditable && status === 'draft' && (
             <button onClick={handlePublishStatusChange} className="btn btn-info">
                 Publish

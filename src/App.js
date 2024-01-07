@@ -140,6 +140,17 @@ const ChangeFeedContent = () => {
     );
   };
 
+  const onSave = (updatedData) => {
+    // Find the item by ID and update it
+    setFeedItems(currentItems =>
+      currentItems.map(item =>
+        item.id === updatedData.id
+          ? { ...item, ...updatedData, isEditable: false }
+          : item
+      )
+    );
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -153,6 +164,7 @@ const ChangeFeedContent = () => {
           key={item.id}
           initialData={item}
           isEditable={item.isEditable}
+          onSave={onSave}
           status={item.status}
           onPublishChange={() => publishItemChange(item.id)}
           onToggleEdit={() => toggleItemEdit({ id: item.id, isEditable: item.isEditable })}
