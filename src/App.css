@@ -1,38 +1,62 @@
-.App {
-  text-align: center;
+.content {
+  padding-left: 250px; /* should match the sidebar width */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.invoice-list-container {
+  /* Add your styles here */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.status-complete {
+  background-color: green;
+  /* Other styles for completed status */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.status-pending {
+  background-color: yellow;
+  /* Other styles for pending status */
+}
+
+.status-cancel {
+  background-color: red;
+  /* Other styles for canceled status */
+}
+.sidebar {
+  width: 250px; /* or whatever width you prefer */
+  height: 100vh; /* 100% of the viewport height */
+  position: fixed; /* Fixed position to stay in place during scroll */
+  left: 0;
+  top: 0;
+}
+
+.logo {
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.menu {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu-item {
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.menu-item.active {
+  background-color: #666; /* Highlight color for active menu item */
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.upgrade-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: blue; /* Use color of your choice */
+  color: white;
+  text-align: center;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Add other styles here */

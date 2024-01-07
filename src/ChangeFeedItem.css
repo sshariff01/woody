@@ -1,0 +1,185 @@
+.change-feed-item {
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 0 !important; /* Removes rounded corners */
+    box-shadow: none !important; /* Removes shadow */
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .date {
+    margin-right: 16px;
+    font-weight: bold;
+  }
+
+  .title-input {
+    flex-grow: 1;
+    margin-right: 16px;
+    font-size: 1.5em;
+    border: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .add-tag-btn,
+  .add-flag-btn {
+    background-color: #e1e1e1;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .content-textarea {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+.edit-btn,
+.save-btn {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Style adjustments when the item is not editable */
+.read-only {
+  background-color: #f0f0f0;
+  border: none;
+}
+
+.title-input.disabled,
+.content-textarea.disabled {
+  cursor: not-allowed;
+  background-color: #f0f0f0;
+  outline: none;
+  border: 1px solid #ccc;
+}
+
+/* Remove the default focus outline for non-editable elements */
+.title-input:disabled,
+.content-textarea:disabled {
+  outline: none;
+}
+
+/* Adjust styles for the edit and save button */
+.edit-btn {
+  /* Your styles for the button */
+}
+
+/* You can also style the button differently when in "save" mode */
+.edit-btn.save-mode {
+  /* Different styles for the button when it says "Save" */
+}
+
+.title {
+    /* Styles that match your design */
+  }
+
+  .content {
+    /* Styles that match your design */
+    white-space: pre-wrap; /* Preserves spaces and line breaks */
+  }
+
+  /* Keep your input and textarea styles for when in edit mode */
+  .title-input,
+  .content-textarea {
+    /* ... */
+  }
+
+  .title-view,
+  .content-view {
+    border: 1px solid transparent;
+    padding: 10px;
+    border-radius: 4px;
+    white-space: pre-wrap; /* Preserves spaces and line breaks */
+  }
+
+  .title-view {
+    font-family: inherit; /* Match the font styles of the input */
+    font-size: 1em; /* Match the size of the input */
+    color: inherit; /* Match the text color of the input */
+  }
+
+  .content-view {
+    font-family: inherit; /* Match the font styles of the textarea */
+    font-size: 1em; /* Match the size of the textarea */
+    color: inherit; /* Match the text color of the textarea */
+    min-height: 150px; /* Match the height of the textarea */
+  }
+
+  /* Style for the inputs and textarea in edit mode */
+  .title-input,
+  .content-textarea {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1em;
+  }
+
+  .edit-btn {
+    /* Styles for edit/save button */
+  }
+
+  /* Additional styles to improve the look & feel of the buttons */
+  .edit-btn {
+    margin-left: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: auto; /* This will push the button to the right */
+  }
+
+  /* Styles to match the edit button when in 'save' mode */
+  .edit-btn.save-mode {
+    background-color: #4CAF50; /* Green background */
+    color: white;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title-and-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .title-view {
+    /* Make sure this takes up the available space so the button aligns right */
+    flex-grow: 1;
+    font-weight: bold;
+  }
+
+  .date-input {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    margin-right: 10px; /* Spacing between the date picker and the title */
+  }
+
+  .date-view {
+    font-family: inherit;
+    font-weight: bold;
+    margin-right: 10px; /* Align with the date input's margin */
+  }
