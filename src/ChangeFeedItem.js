@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState, useEffect } from 'react';
 import './ChangeFeedItem.css';
 
-const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, onToggleEdit }) => {
+const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, status, onToggleEdit, onPublishChange: onPublishChangeProp }) => {
   const [data, setData] = useState(initialData);
   const [isEditable, setIsEditable] = useState(isEditableProp || false);
 
@@ -30,10 +30,11 @@ const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, onToggleEdit 
     setIsEditable(!isEditable);
   };
 
-  const handlePublish = () => {
+  const handlePublishStatusChange = () => {
     // Logic to handle the publish action
-    console.log('Publishing:', data);
-    // You may want to update the state or call an API to publish the item
+    console.log('Changing publish status for:', data);
+    onPublishChangeProp(data.id); // Call the onPublish from props
+    setData({ ...data, status: status === 'draft' ? 'published' : 'draft' });
   };
 
   return (
@@ -70,9 +71,14 @@ const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, onToggleEdit 
             <button onClick={() => onToggleEdit(data.id)} className={`btn ${isEditable ? 'btn-success me-2' : 'btn-primary me-2'}`}>
             {isEditable ? 'Save' : 'Edit'}
             </button>
-            {!isEditable && (
-            <button onClick={handlePublish} className="btn btn-info">
+            {!isEditable && status === 'draft' && (
+            <button onClick={handlePublishStatusChange} className="btn btn-info">
                 Publish
+            </button>
+            )}
+            {!isEditable && status === 'published' && (
+            <button onClick={handlePublishStatusChange} className="btn btn-info">
+                Unpublish
             </button>
             )}
         </div>

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import ChangeFeedItem from './ChangeFeedItem';
 
@@ -31,60 +31,107 @@ const Sidebar = ({ onMenuItemClick, activeItem }) => {
 
 // ChangeFeed content component
 const ChangeFeedContent = () => {
-  const [feedItems, setFeedItems] = useState([
-    {
-      id: 1,
-      date: 'Aug 02',
-      title: '2023 Changelog #3',
-      content: 'Finch will now return a 502 status code when we experience upstream issues with a provider...',
-    },
-    // ... other feed items
-  ]);
+  const [feedItems, setFeedItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const addNewFeedItem = () => {
-    // Check if any existing item is in editable state
-    const anyItemEditable = feedItems.some(item => item.isEditable);
+  // Function to fetch ChangeFeed items from the backend
+  const fetchChangeFeedItems = async () => {
+    setIsLoading(true);
 
-    if (!anyItemEditable) {
-      const newItem = {
-        id: Date.now(),
-        date: new Date().toISOString().split('T')[0],
-        title: '',
-        content: '',
-        isEditable: true // New items are editable by default
-      };
-      setFeedItems([newItem, ...feedItems]);
-    } else {
-      alert('Please save or cancel the current edits before adding a new item.');
+    try {
+      console.log('Skipping backend call for demo purposes');
+      // const response = await fetch('https://your-backend.com/api/change-feed');
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // }
+      // const data = await response.json();
+      const data = [
+        {
+          id: 1,
+          date: '2024/08/04',
+          title: '2023 Changelog #3',
+          content: 'Finch will now return a 502 status code when we experience upstream issues with a provider...',
+          status: 'draft',
+        },
+        // ... other feed items
+      ];
+
+      setFeedItems(data.map(item => ({ ...item, isEditable: false })));
+    } catch (error) {
+      console.error("Could not fetch change feed items:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Function to toggle the edit state of an item
-  const toggleItemEdit = (id, isEditable) => {
-    setFeedItems(currentItems =>
-      currentItems.map(item =>
-        item.id === id ? { ...item, isEditable: !isEditable } : item
-      )
-    );
+  useEffect(() => {
+    fetchChangeFeedItems();
+  }, []);
+
+  // Function to add new item
+  const addNewFeedItem = () => {
+    // Implement logic to check if any item is in editable state before adding
   };
 
-  const onToggleEdit = (id) => {
-    setFeedItems(currentItems =>
-      currentItems.map(item =>
-        item.id === id ? { ...item, isEditable: !item.isEditable } : item
-      )
-    );
+  // Function to publish item
+  const publishItemChange = async (id) => {
+    setIsLoading(true); // Optionally show loading state
+
+    try {
+      console.log('Skipping backend call for demo purposes');
+      // const response = await fetch(`https://your-backend.com/api/changefeed/${id}/publish`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     // Include other headers like Authorization if needed
+      //   },
+      //   // Include body if needed: JSON.stringify({ publishStatus: true })
+      // });
+
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // }
+
+      // Optionally, if your backend returns the updated item:
+      // const updatedItem = await response.json();
+
+      setFeedItems(currentItems =>
+        currentItems.map(item =>
+          item.id === id
+            ? {
+                // ...item,
+                // ...updatedItem, // If your backend returns the updated item
+                // Or manually set the publish status and other changes:
+                ...item,
+                status: item.status === 'published' ? 'draft' : 'published', // Set the publish status
+                isEditable: false, // Make sure it's no longer editable
+              }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error("Could not publish the item:", error);
+    } finally {
+      setIsLoading(false); // Optionally hide loading state
+    }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
       <button onClick={addNewFeedItem} className="btn btn-primary mb-3">Add New Item</button>
+
       {feedItems.map(item => (
         <ChangeFeedItem
           key={item.id}
           initialData={item}
           isEditable={item.isEditable}
-          onToggleEdit={() => toggleItemEdit(item.id, item.isEditable)}
+          status={item.status}
+          onPublishChange={() => publishItemChange(item.id)}
+          // Pass other required props and handlers
         />
       ))}
     </div>
