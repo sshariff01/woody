@@ -48,7 +48,7 @@ const ChangeFeedContent = () => {
       const data = [
         {
           id: 1,
-          date: '2024/08/04',
+          date: '2023-08-04',
           title: '2023 Changelog #3',
           content: 'Finch will now return a 502 status code when we experience upstream issues with a provider...',
           status: 'draft',
@@ -70,7 +70,22 @@ const ChangeFeedContent = () => {
 
   // Function to add new item
   const addNewFeedItem = () => {
-    // Implement logic to check if any item is in editable state before adding
+    // Check if any existing item is in editable state
+    const anyItemEditable = feedItems.some(item => item.isEditable);
+
+    if (!anyItemEditable) {
+      const newItem = {
+        id: Date.now(),
+        date: new Date().toISOString().split('T')[0],
+        title: '',
+        content: '',
+        isEditable: true, // New items are editable by default
+        status: 'draft'
+      };
+      setFeedItems([newItem, ...feedItems]); // Add new item at the beginning
+    } else {
+      alert('Please save or cancel the current edits before adding a new item.');
+    }
   };
 
   // Function to publish item
@@ -116,6 +131,15 @@ const ChangeFeedContent = () => {
     }
   };
 
+  // Function to toggle the edit state of an item
+  const toggleItemEdit = ({ id, isEditable, publishStatus }) => {
+    setFeedItems(currentItems =>
+      currentItems.map(item =>
+        item.id === id ? { ...item, isEditable: !isEditable } : item
+      )
+    );
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -131,6 +155,7 @@ const ChangeFeedContent = () => {
           isEditable={item.isEditable}
           status={item.status}
           onPublishChange={() => publishItemChange(item.id)}
+          onToggleEdit={() => toggleItemEdit({ id: item.id, isEditable: item.isEditable })}
           // Pass other required props and handlers
         />
       ))}

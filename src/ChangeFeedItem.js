@@ -18,12 +18,12 @@ const ChangeFeedItem = ({ initialData, isEditable: isEditableProp, status, onTog
 
   const handleSave = () => {
     setIsEditable(false);
-    onToggleEdit(data.id, false); // Call the onToggleEdit from props
+    onToggleEdit({ id: data.id, isEditable: false, publishStatus: 'draft' }); // Call the onToggleEdit from props
   };
 
   const handleEdit = () => {
     setIsEditable(true);
-    onToggleEdit(data.id, true); // Call the onToggleEdit from props
+    onToggleEdit({ id: data.id, isEditable: true }); // Call the onToggleEdit from props
   };
 
   const toggleEdit = () => {
